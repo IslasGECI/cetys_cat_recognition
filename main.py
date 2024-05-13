@@ -4,7 +4,7 @@ from ultralytics import YOLO
 model = YOLO('yolov8OnlyCats_602020.pt')
 
 #Define the location of the database
-source = "/Trial_photos" 
+source = "/Trial_photos/" 
 
 #Configure the prediction 
 resultsDetect = model.predict(source, conf=0.5, stream=True, show=False, save=True)
