@@ -1,5 +1,4 @@
 classification:
-	mkdir --parents /workdir/cat_detected
 	mv /workdir/camera_trap_photos/ /Trial_photos/
 	#cp -r /workdir/camera_trap_photos /Trial_photos
 	python main.py
