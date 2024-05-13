@@ -8,4 +8,4 @@ RUN apt update && apt install --yes make
 RUN pip install \
     ultralytics
 
-RUN make init
+#RUN make init
