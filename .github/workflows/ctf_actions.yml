@@ -1,0 +1,26 @@
+name: Common Task Framework
+on:
+  push:
+jobs:
+  cetys-classifier:
+    name: CETYS classifier
+    runs-on: ubuntu-latest
+    steps:
+    - name: Docker log-in
+      env:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      run: echo "${DOCKER_PASSWORD}" | docker login --username "${DOCKER_USERNAME}" --password-stdin
+    - name: Download hidden data
+      run: docker pull islasgeci/hidden_camera_trap_photos:latest
+    - run: docker run --name hidden_photos islasgeci/hidden_camera_trap_photos:latest
+    - run: docker cp hidden_photos:/camera_trap_photos .
+    - run: docker cp hidden_photos:/data/all_photos.csv .
+    - name: Clone code repository
+      run: git clone https://github.com/IslasGECI/cetys_cat_recognition.git
+    - name: Build image
+      run: cd cetys_cat_recognition && docker build --tag islasgeci/cetys_cat_recognition .
+    - name: Classify photos
+      run: docker run --volume $PWD:/workdir islasgeci/cetys_cat_recognition:latest make classification
+    - name: Evalute classifier
+      run: docker run --volume $PWD/all_photos.csv:/workdir/data/all_photos.csv --volume $PWD/cat_detected:/workdir/cat_detected --volume $PWD/camera_trap_photos:/workdir/camera_trap_photos  islasgeci/referee_cat_recognition:latest make evaluate_classifier
