@@ -1,11 +1,5 @@
-FROM python:3
+FROM ultralytics/ultralytics
 
-WORKDIR /workdir
 COPY . .
 
 RUN apt update && apt install --yes make
-
-RUN pip install \
-    ultralytics
-
-#RUN make init
