@@ -19,7 +19,7 @@ jobs:
     - name: Clone code repository
       run: git clone https://github.com/IslasGECI/cetys_cat_recognition.git
     - name: Build image
-      run: cd cetys_cat_recognition && docker build --tag islasgeci/cetys_cat_recognition .
+      run: cd cetys_cat_recognition && git checkout with_actions && docker build --tag islasgeci/cetys_cat_recognition .
     - name: Classify photos
       run: docker run --volume $PWD:/workdir islasgeci/cetys_cat_recognition:latest make classification
     - name: Evalute classifier
