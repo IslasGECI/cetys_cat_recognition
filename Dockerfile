@@ -1,4 +1,4 @@
-FROM ultralytics/ultralytics
+FROM ultralytics/ultralytics:latest-python
 
 COPY . .
 
