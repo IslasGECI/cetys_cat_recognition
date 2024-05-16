@@ -19,5 +19,3 @@ for result in resultsDetect:
     probs = result.probs
     if "Cat" in result.verbose():
         shutil.copy(result.path, output)
-
-
